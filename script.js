@@ -19,16 +19,19 @@
 // В вашем основном JavaScript файле
 if ('serviceWorker' in navigator && 'PushManager' in window) {
     navigator.serviceWorker.register('/PWA/sw.js')
-     .then(function(registration) {
-        // Получаем доступ к PushManager
+    .then(function(registration) {
         console.log('ServiceWorker registration successful with scope: ', registration.scope); 
         return registration.pushManager;
       })
-     .then(function(pushManager) {
-        // Запрашиваем разрешение на отображение уведомлений
-        return pushManager.requestPermission();
+    .then(function(pushManager) {
+        if (pushManager) {
+            // Теперь мы уверены, что pushManager существует
+            return pushManager.requestPermission();
+        } else {
+            throw new Error('pushManager is not available');
+        }
       })
-     .then(function(permission) {
+    .then(function(permission) {
         if (permission === 'granted') {
           console.log('Разрешено показывать уведомления');
           // Здесь вы можете добавить логику для отправки уведомлений через Service Worker
@@ -36,11 +39,10 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
           console.log('Не разрешено показывать уведомления');
         }
       })
-     .catch(function(error) {
+    .catch(function(error) {
         console.error('Ошибка при запросе разрешения на уведомления:', error);
       });
-  }
-  
+}
 
 
 
