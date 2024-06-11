@@ -48,15 +48,29 @@ const urlBase64ToUint8Array = base64String => {
     return outputArray;
 }
 
-self.addEventListener("activate", async (e) => {
+const saveSubscription = async (subscription) => {
+    const response = await fetch('https://24academy.ru/PWA/save-subscription', {
+        method: 'post',
+        headers: { 'Content-type': "application/json" },
+        body: JSON.stringify(subscription)
+    })
 
+    return response.json()
+}
+
+self.addEventListener("activate", async (e) => {
     const subscription = await self.registration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array("BJpu-o7kq-OiFNc0HA-JUru2KD6jmvuIuKJ7VKkmTiFD5kr_9ScQ0V70O9DreSBJoXNI9P3pGL7_ssdYt4QLAJg")
     })
-    console.log(subscription)
+
+    const response = await saveSubscription(subscription)
+    console.log(response)
 })
 
+self.addEventListener("push", e => {
+    self.registration.showNotification("Wohoo!!", { body: e.data.text() })
+})
 
 
 
