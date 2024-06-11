@@ -72,8 +72,9 @@ const requestNotificationPermission = async () => {
 }
 const main = async () => {
     checkPermission()
-    await requestNotificationPermission()
     await registers()
+    await requestNotificationPermission()
+    
 }
 
 main()
