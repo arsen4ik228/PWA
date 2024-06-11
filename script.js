@@ -54,6 +54,12 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+const checkPermission = () => {
+    if(!('serviceWorker' in navigator)) {
+        throw new Error("No support for service worker!")
+    }
+}
+
 const registers = async () => {
     const registration = await navigator.serviceWorker.register('/PWA/sw.js');
     return registration;
