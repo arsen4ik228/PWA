@@ -49,7 +49,7 @@ const urlBase64ToUint8Array = base64String => {
 }
 
 const saveSubscription = async (subscription) => {
-    const response = await fetch('https://24academy.ru/PWA/save-subscription', {
+    const response = await fetch('https://24academy.ru/api/save-subscription', {
         method: 'post',
         headers: { 'Content-type': "application/json" },
         body: JSON.stringify(subscription)
@@ -61,7 +61,7 @@ const saveSubscription = async (subscription) => {
 self.addEventListener("activate", async (e) => {
     const subscription = await self.registration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array("BJpu-o7kq-OiFNc0HA-JUru2KD6jmvuIuKJ7VKkmTiFD5kr_9ScQ0V70O9DreSBJoXNI9P3pGL7_ssdYt4QLAJg")
+        applicationServerKey: urlBase64ToUint8Array("BJHxrYJR3WgpNrUYXpuAR6ZdIwTuC09dkzJH6Ca427K6Q1lEmqgFAQeNkvEwh8ZfAgyUbMJyD6FuJZqb_SX9WeE")
     })
 
     const response = await saveSubscription(subscription)
@@ -75,7 +75,8 @@ self.addEventListener("push", e => {
 
 
 // Public Key:
-// BJpu-o7kq-OiFNc0HA-JUru2KD6jmvuIuKJ7VKkmTiFD5kr_9ScQ0V70O9DreSBJoXNI9P3pGL7_ssdYt4QLAJg
+// BJHxrYJR3WgpNrUYXpuAR6ZdIwTuC09dkzJH6Ca427K6Q1lEmqgFAQeNkvEwh8ZfAgyUbMJyD6FuJZqb_SX9WeE
+
 
 // Private Key:
 // _qzOFBUdFvMpVDZc4OsU39Nfgyi21-zntSYJg7RIbSs
