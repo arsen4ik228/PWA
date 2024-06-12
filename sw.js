@@ -49,7 +49,7 @@ const urlBase64ToUint8Array = base64String => {
 }
 
 const saveSubscription = async (subscription) => {
-    const response = await fetch('https://24academy.ru/api/save-subscription', {
+    const response = await fetch('https://24academy.ru/api/6ac81119-f508-48ec-9d4a-6fb3328731c6/save-subscription', {
         method: 'post',
         headers: { 'Content-type': "application/json" },
         body: JSON.stringify(subscription)
