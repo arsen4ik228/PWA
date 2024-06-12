@@ -32,6 +32,11 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+import { useParams } from 'react-router-dom';
+const {accountId} = useParams();
+console.log(accountId);
+console.log(accountId);
+console.log(accountId);
 const urlBase64ToUint8Array = base64String => {
     const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
     const base64 = (base64String + padding)
@@ -49,7 +54,8 @@ const urlBase64ToUint8Array = base64String => {
 }
 
 const saveSubscription = async (subscription) => {
-    const response = await fetch('https://24academy.ru/api/6ac81119-f508-48ec-9d4a-6fb3328731c6/save-subscription', {
+    console.log(accountId);
+    const response = await fetch(`https://24academy.ru/api/${accountId}/save-subscription`, {
         method: 'post',
         headers: { 'Content-type': "application/json" },
         body: JSON.stringify(subscription)
