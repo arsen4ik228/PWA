@@ -68,7 +68,7 @@ self.addEventListener('activate', async (event) => {
     event.waitUntil(async function() {
         const subscription = await self.registration.pushManager.subscribe({
             userVisibleOnly: true,
-            applicationServerKey: urlBase64ToUint8Array("YOUR_PUBLIC_VAPID_KEY_HERE")
+            applicationServerKey: urlBase64ToUint8Array("BJHxrYJR3WgpNrUYXpuAR6ZdIwTuC09dkzJH6Ca427K6Q1lEmqgFAQeNkvEwh8ZfAgyUbMJyD6FuJZqb_SX9WeE")
         });
 
         // Чтение accountId из LocalStorage
