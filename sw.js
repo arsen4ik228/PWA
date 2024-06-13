@@ -53,7 +53,7 @@ const urlBase64ToUint8Array = base64String => {
     return outputArray;
 }
 
-const saveSubscription = async (subscription) => {
+const saveSubscription = async (subscription,accountId) => {
     console.log(accountId);
     const response = await fetch(`https://24academy.ru/api/${accountId}/save-subscription`, {
         method: 'post',
@@ -64,15 +64,22 @@ const saveSubscription = async (subscription) => {
     return response.json()
 }
 
-self.addEventListener("activate", async (e) => {
-    const subscription = await self.registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array("BJHxrYJR3WgpNrUYXpuAR6ZdIwTuC09dkzJH6Ca427K6Q1lEmqgFAQeNkvEwh8ZfAgyUbMJyD6FuJZqb_SX9WeE")
-    })
+self.addEventListener('activate', async (event) => {
+    event.waitUntil(async function() {
+        const subscription = await self.registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: urlBase64ToUint8Array("YOUR_PUBLIC_VAPID_KEY_HERE")
+        });
 
-    const response = await saveSubscription(subscription)
-    console.log(response)
-})
+        // Чтение accountId из LocalStorage
+        const accountId = localStorage.getItem('accountId');
+        if (accountId) {
+            const response = await saveSubscription(subscription, accountId);
+            console.log(response);
+        }
+    }());
+});
+
 
 self.addEventListener("push", e => {
     self.registration.showNotification("Wohoo!!", { body: e.data.text() })
