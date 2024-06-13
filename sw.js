@@ -68,9 +68,8 @@ self.addEventListener('message', event => {
 
 const saveSubscription = async (subscription) => {
     console.log(`не преобразовання ${accountId}`);
-    let accountIdString = String(accountId);
-    console.log(`Преобразованная в строку штука-дрюка ${accountIdString}`)
-    const response = await fetch(`https://24academy.ru/api/${accountIdString}/save-subscription`, {
+    
+    const response = await fetch(`https://24academy.ru/api/${accountId}/save-subscription`, {
         method: 'post',
         headers: { 'Content-type': "application/json" },
         body: JSON.stringify(subscription)
