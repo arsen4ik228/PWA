@@ -67,7 +67,7 @@ self.addEventListener('message', event => {
 });
 
 const saveSubscription = async (subscription) => {
-    console.log(`не преобразовання ${accountId}`);
+    console.log(`${accountId}`);
     
     const response = await fetch(`https://24academy.ru/api/${accountId}/save-subscription`, {
         method: 'post',
@@ -90,7 +90,7 @@ self.addEventListener("activate", async (e) => {
 
 
 self.addEventListener("push", e => {
-    self.registration.showNotification("Уведомление", { body: e.data.text() })
+    self.registration.showNotification("Уведомление", { body: e.data.title })
 })
 
 
