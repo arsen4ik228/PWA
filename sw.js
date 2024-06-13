@@ -50,7 +50,7 @@ const urlBase64ToUint8Array = base64String => {
     return outputArray;
 }
 
-let accountId; // Переменная для хранения accountId
+const accountId = null; // Переменная для хранения accountId
 
 self.addEventListener('message', event => {
     const { type, data } = event.data;
@@ -59,12 +59,7 @@ self.addEventListener('message', event => {
         // Сохраняем accountId в переменную
         accountId = data.accountId;
         
-        // Теперь accountId доступен для использования в других частях Service Worker
         
-        // Например, вы можете использовать accountId в fetch запросе:
-        // fetchSomeData(accountId);
-        
-        // Отправляем подтверждение обратно в основной поток
         self.clients.matchAll().then(clients => {
             clients.forEach(client => client.postMessage({ type: 'ACCOUNT_ID_SET' }));
         });
@@ -94,7 +89,7 @@ self.addEventListener("activate", async (e) => {
 
 
 self.addEventListener("push", e => {
-    self.registration.showNotification("Wohoo!!", { body: e.data.text() })
+    self.registration.showNotification("Уведомление", { body: e.data.text() })
 })
 
 
