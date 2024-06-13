@@ -50,7 +50,7 @@ const urlBase64ToUint8Array = base64String => {
     return outputArray;
 }
 
-const accountId = null; // Переменная для хранения accountId
+let accountId; // Переменная для хранения accountId
 
 self.addEventListener('message', event => {
     const { type, data } = event.data;
@@ -67,8 +67,10 @@ self.addEventListener('message', event => {
 });
 
 const saveSubscription = async (subscription) => {
-    console.log(accountId);
-    const response = await fetch(`https://24academy.ru/api/${accountId}/save-subscription`, {
+    console.log(`не преобразовання ${accountId}`);
+    let accountIdString = String(accountId);
+    console.log(`Преобразованная в строку штука-дрюка ${accountIdString}`)
+    const response = await fetch(`https://24academy.ru/api/${accountIdString}/save-subscription`, {
         method: 'post',
         headers: { 'Content-type': "application/json" },
         body: JSON.stringify(subscription)
