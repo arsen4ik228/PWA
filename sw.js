@@ -32,7 +32,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+let accountId;
 
 const urlBase64ToUint8Array = base64String => {
     const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
@@ -50,7 +50,20 @@ const urlBase64ToUint8Array = base64String => {
     return outputArray;
 }
 
-const saveSubscription = async (subscription,accountId) => {
+self.clients.matchAll().then(clients => {
+    clients.forEach(client => {
+        client.postMessage({ type: 'getAccountId' });
+    });
+});
+self.addEventListener('message', event => {
+    if (event.data.type === 'accountIdReceived') {
+        accountId = event.data.accountId;
+        // Теперь у вас есть accountId, и вы можете использовать его как нужно
+    }
+});
+
+
+const saveSubscription = async (subscription) => {
     console.log(accountId);
     const response = await fetch(`https://24academy.ru/api/${accountId}/save-subscription`, {
         method: 'post',
@@ -68,14 +81,16 @@ self.addEventListener('activate', async (event) => {
             applicationServerKey: urlBase64ToUint8Array("BJHxrYJR3WgpNrUYXpuAR6ZdIwTuC09dkzJH6Ca427K6Q1lEmqgFAQeNkvEwh8ZfAgyUbMJyD6FuJZqb_SX9WeE")
         });
 
-        // Чтение accountId из LocalStorage
-        const accountId = localStorage.getItem('accountId');
+        // Проверяем, что accountId был получен
         if (accountId) {
             const response = await saveSubscription(subscription, accountId);
             console.log(response);
+        } else {
+            console.error('Account ID was not received.');
         }
     }());
 });
+
 
 
 self.addEventListener("push", e => {
