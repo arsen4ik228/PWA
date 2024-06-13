@@ -32,7 +32,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-let accountId;
+
 
 const urlBase64ToUint8Array = base64String => {
     const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
@@ -50,18 +50,26 @@ const urlBase64ToUint8Array = base64String => {
     return outputArray;
 }
 
-self.clients.matchAll().then(clients => {
-    clients.forEach(client => {
-        client.postMessage({ type: 'getAccountId' });
-    });
-});
+let accountId; // Переменная для хранения accountId
+
 self.addEventListener('message', event => {
-    if (event.data.type === 'accountIdReceived') {
-        accountId = event.data.accountId;
-        // Теперь у вас есть accountId, и вы можете использовать его как нужно
+    const { type, data } = event.data;
+    
+    if (type === 'SET_ACCOUNT_ID') {
+        // Сохраняем accountId в переменную
+        accountId = data.accountId;
+        
+        // Теперь accountId доступен для использования в других частях Service Worker
+        
+        // Например, вы можете использовать accountId в fetch запросе:
+        // fetchSomeData(accountId);
+        
+        // Отправляем подтверждение обратно в основной поток
+        self.clients.matchAll().then(clients => {
+            clients.forEach(client => client.postMessage({ type: 'ACCOUNT_ID_SET' }));
+        });
     }
 });
-
 
 const saveSubscription = async (subscription) => {
     console.log(accountId);
@@ -74,23 +82,15 @@ const saveSubscription = async (subscription) => {
     return response.json()
 }
 
-self.addEventListener('activate', async (event) => {
-    event.waitUntil(async function() {
-        const subscription = await self.registration.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey: urlBase64ToUint8Array("BJHxrYJR3WgpNrUYXpuAR6ZdIwTuC09dkzJH6Ca427K6Q1lEmqgFAQeNkvEwh8ZfAgyUbMJyD6FuJZqb_SX9WeE")
-        });
+self.addEventListener("activate", async (e) => {
+    const subscription = await self.registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array("BJHxrYJR3WgpNrUYXpuAR6ZdIwTuC09dkzJH6Ca427K6Q1lEmqgFAQeNkvEwh8ZfAgyUbMJyD6FuJZqb_SX9WeE")
+    })
 
-        // Проверяем, что accountId был получен
-        if (accountId) {
-            const response = await saveSubscription(subscription, accountId);
-            console.log(response);
-        } else {
-            console.error('Account ID was not received.');
-        }
-    }());
-});
-
+    const response = await saveSubscription(subscription)
+    console.log(response)
+})
 
 
 self.addEventListener("push", e => {
