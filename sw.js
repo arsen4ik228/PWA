@@ -2,7 +2,7 @@ let accountId;
 self.addEventListener('message', event => {
     const { type, data } = event.data;
     
-    if (type === 'SET_ACCOUNT_ID') {
+    if (type == 'SET_ACCOUNT_ID') {
         // Сохраняем accountId в переменную
         accountId = data.accountId;
         console.log(`сообщение слушатель ${accountId}`);
