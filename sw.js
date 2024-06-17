@@ -62,7 +62,24 @@ async function saveSubscription(subscription) {
     return response.json();
 }
 
+self.addEventListener("push", e => {
+    // Преобразование текстового содержимого события в объект JSON
+    let pushData = {};
+    try {
+        pushData = JSON.parse(e.data.text());
+    } catch (error) {
+        console.error('Ошибка при разборе JSON:', error);
+        return; // Если JSON не может быть разобран, прекращаем выполнение
+    }
 
+    // Проверяем, что объект содержит поля title и content
+    if (pushData.title && pushData.content) {
+        // Создаем уведомление с использованием только поля title
+        self.registration.showNotification(pushData.title, { body: pushData.content });
+    } else {
+        console.error('Полученные данные не содержат обязательных полей title и/or content');
+    }
+});
 
 // const urlBase64ToUint8Array = base64String => {
 //     const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
