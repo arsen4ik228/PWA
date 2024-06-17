@@ -58,7 +58,7 @@ self.addEventListener('message', event => {
     if (type === 'SET_ACCOUNT_ID') {
         // Сохраняем accountId в переменную
         accountId = data.accountId;
-        
+        console.log(accountId);
         
         self.clients.matchAll().then(clients => {
             clients.forEach(client => client.postMessage({ type: 'ACCOUNT_ID_SET' }));
