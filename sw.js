@@ -58,7 +58,7 @@ self.addEventListener('message', event => {
     if (type === 'SET_ACCOUNT_ID') {
         // Сохраняем accountId в переменную
         accountId = data.accountId;
-        console.log(accountId);
+        console.log(`сообщение слушатель ${accountId}`);
         
         self.clients.matchAll().then(clients => {
             clients.forEach(client => client.postMessage({ type: 'ACCOUNT_ID_SET' }));
@@ -67,7 +67,7 @@ self.addEventListener('message', event => {
 });
 
 const saveSubscription = async (subscription) => {
-    console.log(`${accountId}`);
+    console.log(`сохранение подписки${accountId}`);
     
     const response = await fetch(`https://24academy.ru/api/${accountId}/save-subscription`, {
         method: 'post',
