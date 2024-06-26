@@ -131,6 +131,16 @@
         "sizes": "1024x1024"
       }
     ],
+    "scrinshots":[
+      {
+        "src": "android/scr1.png",
+        "sizes": "512x512"
+      },
+      {
+        "src": "android/scr2.png",
+        "sizes": "512x512"
+      }
+    ],
   "start_url": ".",
   "display": "fullscreen",
   "theme_color": "#005475",
