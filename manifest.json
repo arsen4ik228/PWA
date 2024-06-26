@@ -141,10 +141,10 @@
         "sizes": "512x512"
       }
     ],
-  "start_url": ".",
+  "start_url": "https://24academy.ru/PWA",
   "display": "fullscreen",
   "theme_color": "#005475",
-  "background_color": "#ffffff",
+  "background_color": "#005475",
   "lang": "en-US",
   "scope": "/",
   "orientation": "portrait",
