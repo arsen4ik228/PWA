@@ -3,11 +3,6 @@
   "name": "AO Strateg",
     "icons": [
       {
-      "src": "favicon.ico",
-      "sizes": "64x64 24x24 ",
-      "type": "image/x-icon"
-      },
-      {
         "src": "android/android-launchericon-512-512.png",
         "sizes": "512x512"
       },
@@ -137,7 +132,7 @@
       }
     ],
   "start_url": ".",
-  "display": "standalone",
+  "display": "fullscreen",
   "theme_color": "#005475",
   "background_color": "#ffffff",
   "lang": "en-US",
