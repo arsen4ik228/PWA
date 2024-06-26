@@ -145,9 +145,9 @@ self.addEventListener("push", e => {
     }
 
     // Проверяем, что объект содержит поля title и content
-    if (pushData.title && pushData.content) {
+    if (pushData.title) {
         // Создаем уведомление с использованием только поля title
-        self.registration.showNotification(pushData.title, { body: pushData.content });
+        self.registration.showNotification("Уведомление", { body: pushData.title });
     } else {
         console.error('Полученные данные не содержат обязательных полей title и/or content');
     }
