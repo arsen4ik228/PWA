@@ -155,7 +155,7 @@ self.addEventListener("push", e => {
 self.addEventListener('notificationclick', function(event) {
     const clickedNotification = event.notification;
     clickedNotification.close();
-    const promiseChain = clients.openWindow('/');
+    const promiseChain = clients.openWindow('https://24academy.ru/PWA');
     event.waitUntil(promiseChain);
 });
 
