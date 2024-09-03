@@ -128,8 +128,8 @@ const urlBase64ToUint8Array = base64String => {
 async function saveSubscription(subscription) {
     console.log(`сохранение подписки ${accountId}`);
     
-    // const response = await fetch(`https://24academy.ru/api/${accountId}/save-subscription`, {
-    const response = await fetch(`http://localhost:3001/api/${accountId}/save-subscription`, { 
+    const response = await fetch(`https://24academy.ru/api/${accountId}/save-subscription`, {
+    // const response = await fetch(`http://localhost:3001/api/${accountId}/save-subscription`, { 
         method: 'post',
         headers: { 'Content-type': "application/json" },
         body: JSON.stringify(subscription)
