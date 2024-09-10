@@ -142,7 +142,7 @@
       }
     ],
   "start_url": ".",
-  "display": "fullscreen",
+  "display": "standalone",
   "theme_color": "#005475",
   "background_color": "#ffffff",
   "lang": "en-US",
